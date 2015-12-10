@@ -9,26 +9,36 @@ namespace TUDAI
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            var id = Constants.id_parametro;
             if (!IsPostBack)
             {
                 CargarDdls();
-            }
-            var id = Constants.id_parametro;
-            if (Request.QueryString[id] != null) {
-                var Noti = new Noticia()
+                if (Request.QueryString[id] != null)
                 {
-                    Id = Convert.ToInt32(Request.QueryString[id])
-                };
+                    var Noti = new Noticia()
+                    {
+                        Id = Convert.ToInt32(Request.QueryString[id])
+                    };
 
-                var noti = new NoticiaBusiness().GetNoticiaById(Noti);
-                txt_titulo.Text = noti.Tables[0].Rows[0].ItemArray[1].ToString();
-                txt_cuerpo.Text = noti.Tables[0].Rows[0].ItemArray[3].ToString();
-                date_fecha.SelectedDate = Convert.ToDateTime(noti.Tables[0].Rows[0].ItemArray[2].ToString());
-                                           
-                if (noti.Tables[0].Rows[0].ItemArray[4].ToString() != "$nbsp") {
-                    ddl_categorias.SelectedValue = noti.Tables[0].Rows[0].ItemArray[4].ToString();
+                    var noti = new NoticiaBusiness().GetNoticiaById(Noti);
+                    txt_titulo.Text = noti.Tables[0].Rows[0].ItemArray[1].ToString();
+                    txt_cuerpo.Text = noti.Tables[0].Rows[0].ItemArray[3].ToString();
+                    date_fecha.SelectedDate = Convert.ToDateTime(noti.Tables[0].Rows[0].ItemArray[2].ToString());
+
+                    if (noti.Tables[0].Rows[0].ItemArray[4].ToString() != "$nbsp")
+                    {
+                        ddl_categorias.SelectedValue = noti.Tables[0].Rows[0].ItemArray[4].ToString();
+                    }
                 }
-                                
+            }
+            if (Request.QueryString[id] != null)
+            {
+                btn_submit.Text = "Modificar Noticia";
+                btn_submit.Click += Editar_Noticia;
+
+            }
+            else {
+                btn_submit.Click += Publicar_Noticia;
             }
         }
 
@@ -53,6 +63,24 @@ namespace TUDAI
             }
             lbl_resultado.Text = "Noticia publicada correctamente";            
             
+        }
+
+        protected void Editar_Noticia(object sender, EventArgs e)
+        {
+            var oNoticia = new Noticia()
+            {
+                Id = Convert.ToInt32(Request.QueryString[Constants.id_parametro]),
+                Titulo = txt_titulo.Text,
+                Cuerpo = txt_cuerpo.Text,
+                Fecha = date_fecha.SelectedDate,
+                IdCategoria = int.Parse(ddl_categorias.SelectedValue)
+            };
+            using (NoticiaBusiness n = new NoticiaBusiness())
+            {
+                n.UpdateNoticia(oNoticia);
+            }
+            lbl_resultado.Text = "Noticia modificada correctamente";
+
         }
     }
 }

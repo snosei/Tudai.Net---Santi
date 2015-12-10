@@ -31,6 +31,31 @@ namespace DAL
             }
         }
 
+        public void UpdateNoticia(Noticia oNoticia)
+        {
+            SqlConnection oConn = new SqlConnection(Constants.connectionString);
+            oConn.Open();
+            SqlTransaction oTran = oConn.BeginTransaction();
+            try
+            {
+                using (NoticiaDataAccess tDataAccess = new NoticiaDataAccess())
+                {
+                    tDataAccess.Update(oConn, oTran, oNoticia);
+                }
+                oTran.Commit();
+            }
+            catch (Exception ex)
+            {
+                oTran.Rollback();
+                throw ex;
+            }
+            finally
+            {
+                oConn.Close();
+                oTran.Dispose();
+            }
+        }
+
         public DataSet GetNoticiaById(Noticia oNoticia)
         {
             SqlConnection oConn = new SqlConnection(Constants.connectionString);

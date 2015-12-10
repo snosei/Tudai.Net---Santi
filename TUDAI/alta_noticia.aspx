@@ -19,7 +19,7 @@
         </asp:DropDownList>            
     </div>
     <div class="form-group">
-        <asp:Button ID="btn_submit" runat="server" OnClick="Publicar_Noticia" Text="Publicar" CssClass="btn btn-default"/>
+        <asp:Button ID="btn_submit" runat="server" Text="Publicar" CssClass="btn btn-default"/>
     </div>
 
     <asp:Label Text="" ID="lbl_resultado" runat="server" ></asp:Label>
