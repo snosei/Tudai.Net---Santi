@@ -13,6 +13,23 @@ namespace TUDAI
             {
                 CargarDdls();
             }
+            var id = Constants.id_parametro;
+            if (Request.QueryString[id] != null) {
+                var Noti = new Noticia()
+                {
+                    Id = Convert.ToInt32(Request.QueryString[id])
+                };
+
+                var noti = new NoticiaBusiness().GetNoticiaById(Noti);
+                txt_titulo.Text = noti.Tables[0].Rows[0].ItemArray[1].ToString();
+                txt_cuerpo.Text = noti.Tables[0].Rows[0].ItemArray[3].ToString();
+                date_fecha.SelectedDate = Convert.ToDateTime(noti.Tables[0].Rows[0].ItemArray[2].ToString());
+                                           
+                if (noti.Tables[0].Rows[0].ItemArray[4].ToString() != "$nbsp") {
+                    ddl_categorias.SelectedValue = noti.Tables[0].Rows[0].ItemArray[4].ToString();
+                }
+                                
+            }
         }
 
         private void CargarDdls()

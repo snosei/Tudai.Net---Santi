@@ -20,7 +20,7 @@
             datanavigateurlfields="Id"
             datanavigateurlformatstring="~\alta_noticia.aspx?Id={0}"            
             headertext="Links"
-            target="_blank" />
+            target="_self" />
 
         </Columns>
     </asp:GridView>
