@@ -13,9 +13,11 @@ namespace DAL
                 oComm.Connection = (oTran != null) ? oTran.Connection : oConn;
                 oComm.Transaction = oTran;
 
-                oComm.CommandType = CommandType.Text;
-                oComm.CommandText = string.Format("INSERT INTO {0}.{1}(titulo,fecha,cuerpo,id_categoria) VALUES (@titulo, @fecha, @cuerpo, @id_categoria)", Constants.esquema, Constants.tablaNoticias);
+                //oComm.CommandType = CommandType.Text;
+                //oComm.CommandText = string.Format("INSERT INTO {0}.{1}(titulo,fecha,cuerpo,id_categoria) VALUES (@titulo, @fecha, @cuerpo, @id_categoria)", Constants.esquema, Constants.tablaNoticias);
 
+                oComm.CommandType = CommandType.StoredProcedure;
+                oComm.CommandText = "insertarNoticia";
                 oComm.Parameters.AddWithValue("@titulo", oNoticia.Titulo);
                 oComm.Parameters.AddWithValue("@fecha", oNoticia.Fecha);
                 oComm.Parameters.AddWithValue("@cuerpo", oNoticia.Cuerpo);                
@@ -34,6 +36,7 @@ namespace DAL
 
                 oComm.CommandType = CommandType.Text;
                 oComm.CommandText = string.Format("UPDATE {0}.{1} SET titulo=@titulo,fecha=@fecha,cuerpo=@cuerpo,id_categoria=@id_categoria WHERE id=@Id", Constants.esquema, Constants.tablaNoticias);
+
                 oComm.Parameters.AddWithValue("@titulo", oNoticia.Titulo);
                 oComm.Parameters.AddWithValue("@fecha", oNoticia.Fecha);
                 oComm.Parameters.AddWithValue("@cuerpo", oNoticia.Cuerpo);
