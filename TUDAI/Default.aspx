@@ -21,6 +21,7 @@
             datanavigateurlformatstring="~\alta_noticia.aspx?Id={0}"            
             headertext="Links"
             target="_self" />
+            <asp:BoundField  DataField="Autor" HeaderText="Autor"/>
 
         </Columns>
     </asp:GridView>

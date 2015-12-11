@@ -13,15 +13,16 @@ namespace DAL
                 oComm.Connection = (oTran != null) ? oTran.Connection : oConn;
                 oComm.Transaction = oTran;
 
-                //oComm.CommandType = CommandType.Text;
-                //oComm.CommandText = string.Format("INSERT INTO {0}.{1}(titulo,fecha,cuerpo,id_categoria) VALUES (@titulo, @fecha, @cuerpo, @id_categoria)", Constants.esquema, Constants.tablaNoticias);
+                oComm.CommandType = CommandType.Text;
+                oComm.CommandText = string.Format("INSERT INTO {0}.{1}(titulo,fecha,cuerpo,id_categoria,autor) VALUES (@titulo, @fecha, @cuerpo, @id_categoria, @autor)", Constants.esquema, Constants.tablaNoticias);
 
-                oComm.CommandType = CommandType.StoredProcedure;
-                oComm.CommandText = "insertarNoticia";
+                //oComm.CommandType = CommandType.StoredProcedure;
+                //oComm.CommandText = "insertarNoticia";
                 oComm.Parameters.AddWithValue("@titulo", oNoticia.Titulo);
                 oComm.Parameters.AddWithValue("@fecha", oNoticia.Fecha);
                 oComm.Parameters.AddWithValue("@cuerpo", oNoticia.Cuerpo);                
                 oComm.Parameters.AddWithValue("@id_categoria", oNoticia.IdCategoria == null ? DBNull.Value : (object)oNoticia.IdCategoria);
+                oComm.Parameters.AddWithValue("@autor", oNoticia.Autor);
 
                 oComm.ExecuteNonQuery();
             }
@@ -35,12 +36,13 @@ namespace DAL
                 oComm.Transaction = oTran;
 
                 oComm.CommandType = CommandType.Text;
-                oComm.CommandText = string.Format("UPDATE {0}.{1} SET titulo=@titulo,fecha=@fecha,cuerpo=@cuerpo,id_categoria=@id_categoria WHERE id=@Id", Constants.esquema, Constants.tablaNoticias);
+                oComm.CommandText = string.Format("UPDATE {0}.{1} SET titulo=@titulo,fecha=@fecha,cuerpo=@cuerpo,id_categoria=@id_categoria,autor=@autor WHERE id=@Id", Constants.esquema, Constants.tablaNoticias);
 
                 oComm.Parameters.AddWithValue("@titulo", oNoticia.Titulo);
                 oComm.Parameters.AddWithValue("@fecha", oNoticia.Fecha);
                 oComm.Parameters.AddWithValue("@cuerpo", oNoticia.Cuerpo);
                 oComm.Parameters.AddWithValue("@id_categoria", oNoticia.IdCategoria == null ? DBNull.Value : (object)oNoticia.IdCategoria);
+                oComm.Parameters.AddWithValue("@autor", oNoticia.Autor);
                 oComm.Parameters.AddWithValue("@id", oNoticia.Id);
 
                 oComm.ExecuteNonQuery();
@@ -60,7 +62,7 @@ namespace DAL
                         oComm.Transaction = oTran;
 
                         oComm.CommandType = CommandType.Text;
-                        oComm.CommandText = string.Format("SELECT [id],[titulo],[fecha],[cuerpo],[id_categoria] FROM {0}.{1} WHERE id=@id", Constants.esquema, Constants.tablaNoticias);
+                        oComm.CommandText = string.Format("SELECT [id],[titulo],[fecha],[cuerpo],[id_categoria],[autor] FROM {0}.{1} WHERE id=@id", Constants.esquema, Constants.tablaNoticias);
 
                         oComm.Parameters.AddWithValue("id",oNoticia.Id);
 
@@ -89,7 +91,7 @@ namespace DAL
                         oComm.Transaction = oTran;
 
                         oComm.CommandType = CommandType.Text;
-                        oComm.CommandText = string.Format("SELECT [id],[titulo],[fecha],[cuerpo],[id_categoria] FROM {0}.{1}", Constants.esquema, Constants.tablaNoticias);
+                        oComm.CommandText = string.Format("SELECT [id],[titulo],[fecha],[cuerpo],[id_categoria],[autor] FROM {0}.{1}", Constants.esquema, Constants.tablaNoticias);
                         
                         adapter.SelectCommand = oComm;
                         adapter.Fill(ds);

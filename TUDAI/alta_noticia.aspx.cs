@@ -23,6 +23,7 @@ namespace TUDAI
                     var noti = new NoticiaBusiness().GetNoticiaById(Noti);
                     txt_titulo.Text = noti.Tables[0].Rows[0].ItemArray[1].ToString();
                     txt_cuerpo.Text = noti.Tables[0].Rows[0].ItemArray[3].ToString();
+                    txt_autor.Text = noti.Tables[0].Rows[0].ItemArray[5].ToString();
                     date_fecha.SelectedDate = Convert.ToDateTime(noti.Tables[0].Rows[0].ItemArray[2].ToString());
 
                     if (noti.Tables[0].Rows[0].ItemArray[4].ToString() != "$nbsp")
@@ -55,7 +56,8 @@ namespace TUDAI
                 Titulo = txt_titulo.Text,
                 Cuerpo = txt_cuerpo.Text,
                 Fecha = date_fecha.SelectedDate,
-                IdCategoria = int.Parse(ddl_categorias.SelectedValue)
+                IdCategoria = int.Parse(ddl_categorias.SelectedValue),
+                Autor = txt_autor.Text
             };
             using (NoticiaBusiness n = new NoticiaBusiness())
             {
@@ -73,7 +75,8 @@ namespace TUDAI
                 Titulo = txt_titulo.Text,
                 Cuerpo = txt_cuerpo.Text,
                 Fecha = date_fecha.SelectedDate,
-                IdCategoria = int.Parse(ddl_categorias.SelectedValue)
+                IdCategoria = int.Parse(ddl_categorias.SelectedValue),
+                Autor = txt_autor.Text
             };
             using (NoticiaBusiness n = new NoticiaBusiness())
             {
