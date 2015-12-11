@@ -6,6 +6,9 @@
     <asp:Label CssClass="" Text="Santi" runat="server"></asp:Label>
     <h2>Noticias</h2>
 
+    <asp:ScriptManager EnablePartialRendering="true" ID="ScriptManager1" runat="server" />
+    <asp:UpdatePanel runat="server" ID="updatePanel1" UpdateMode="Conditional">
+    <ContentTemplate>
     <asp:GridView ID="gvNoticias" runat="server" CssClass="table table-hover" GridLines="None" BorderStyle="None"
         AutoGenerateColumns="false">
         <Columns>
@@ -33,5 +36,7 @@
     <div class="form-group">
         <asp:Button ID="btn_submit" runat="server" OnClick="Filtrar" Text="Filtrar" CssClass="btn btn-default"/>
     </div>
+                </ContentTemplate>
+    </asp:UpdatePanel>
 
 </asp:Content>
