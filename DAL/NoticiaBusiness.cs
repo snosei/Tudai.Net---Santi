@@ -73,6 +73,23 @@ namespace DAL
             }
         }
 
+        public DataSet GetNoticiasByAutor(Noticia oNoticia)
+        {
+            SqlConnection oConn = new SqlConnection(Constants.connectionString);
+            oConn.Open();
+            try
+            {
+                using (NoticiaDataAccess tDataAccess = new NoticiaDataAccess())
+                {
+                    return tDataAccess.GetByAutor(oConn, null, oNoticia);
+                }
+            }
+            finally
+            {
+                oConn.Close();
+            }
+        }
+
         public DataSet GetNoticias()
         {
             SqlConnection oConn = new SqlConnection(Constants.connectionString);

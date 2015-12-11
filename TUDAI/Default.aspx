@@ -26,4 +26,12 @@
         </Columns>
     </asp:GridView>
 
+    <div class="form-group">
+        <asp:TextBox ID="txt_filtro" runat="server" placeholder="Autor de la noticia a filtrar" CssClass="form-control"></asp:TextBox>
+    </div>
+
+    <div class="form-group">
+        <asp:Button ID="btn_submit" runat="server" OnClick="Filtrar" Text="Filtrar" CssClass="btn btn-default"/>
+    </div>
+
 </asp:Content>

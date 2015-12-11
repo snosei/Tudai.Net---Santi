@@ -78,6 +78,35 @@ namespace DAL
             }
         }
 
+        public DataSet GetByAutor(SqlConnection oConn, SqlTransaction oTran, Noticia oNoticia)
+        {
+            using (SqlDataAdapter adapter = new SqlDataAdapter())
+            {
+                using (SqlCommand oComm = new SqlCommand())
+                {
+                    try
+                    {
+                        DataSet ds = new DataSet();
+                        oComm.Connection = oTran != null ? oTran.Connection : oConn;
+                        oComm.Transaction = oTran;
+
+                        oComm.CommandType = CommandType.Text;
+                        oComm.CommandText = string.Format("SELECT [id],[titulo],[fecha],[cuerpo],[id_categoria],[autor] FROM {0}.{1} WHERE autor LIKE '%' + @autor + '%'", Constants.esquema, Constants.tablaNoticias);
+
+                        oComm.Parameters.AddWithValue("@autor", oNoticia.Autor);
+
+                        adapter.SelectCommand = oComm;
+                        adapter.Fill(ds);
+
+                        return ds;
+                    }
+                    finally
+                    {
+                    }
+                }
+            }
+        }
+
         public DataSet GetAll(SqlConnection oConn, SqlTransaction oTran)
         {
             using (SqlDataAdapter adapter = new SqlDataAdapter())
